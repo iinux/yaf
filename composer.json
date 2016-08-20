@@ -4,6 +4,10 @@
 	"license": "MIT",
 	"require": {
 		"php": ">=5.4.0",
-		"swiftmailer/swiftmailer": "*"
+		"swiftmailer/swiftmailer": "*",
+		"illuminate/database": "5.0.*",
+		"illuminate/events": "5.0.*",
+		"symfony/debug": "2.6.*",
+		"symfony/var-dumper": "2.6.*"
 	}
 }

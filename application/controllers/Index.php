@@ -26,7 +26,7 @@ class IndexController extends BaseController {
 		//4. render by Yaf, 如果这里返回FALSE, Yaf将不会调用自动视图引擎Render模板
         return TRUE;
 	}
-	public function indexAction()
+	public function index3Action()
 	{
 		$transport = Swift_SmtpTransport::newInstance('mail.139.com', 25);
 		$transport->setUsername('iinux@139.com');
@@ -45,15 +45,29 @@ class IndexController extends BaseController {
 		$message->setSubject("order");
 		$message->setBody('content', 'text/html', 'utf-8');
 		//$message->attach(Swift_Attachment::fromPath('pic.jpg', 'image/jpeg')->setFilename('rename_pic.jpg'));
-		try{
+		try {
 			$mailer->send($message);
-		}
-		catch (Exception $e){
+		} catch (Exception $e) {
 			echo 'error: There was a problem communicating with SMTP: ' . $e->getMessage();
 		}
+	}
+	public function indexAction()
+	{
+		// 插入, 方式之一
+		UserModel::create([
+			'name'      => 'eloquent',
+			'password'  => password_hash('password', PASSWORD_BCRYPT, ['cost' => 12]),
+			'email'     => 'test@example.com'
+		]);
+
+		// 获取
+		$user = User::find(1);
+		dd($user->toArray()); // dd 放到
+
 		//$this->view->assign("content", "Hello Hadoop! Welcome to Beijing!<br/>");
 		$this->view->clearVars();
-		$this->view->content = "Hello Hadoop! Welcome to Beijing!<br/>";
+		$model = new UserModel();
+		$this->view->content = $model->say();
 		/*指定template_dir目录下的模板*/
 		$this->view->display('smarty.tpl');
 		/*false为禁止显示默认模板   return false表示显示display指定的模板*/
