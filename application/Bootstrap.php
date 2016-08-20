@@ -7,6 +7,9 @@
  * 这些方法, 都接受一个参数:Yaf_Dispatcher $dispatcher
  * 调用的次序, 和申明的次序相同
  */
+
+use Illuminate\Database\Capsule\Manager as Capsule;
+
 class Bootstrap extends Yaf_Bootstrap_Abstract{
 
     public function _initConfig() {
@@ -38,5 +41,14 @@ class Bootstrap extends Yaf_Bootstrap_Abstract{
 
 	public function _initLoader(Yaf_Dispatcher $dispatcher) {
 		require __DIR__.'/../vendor/autoload.php';
+	}
+
+	public function _initIlluminateDatabase(Yaf_Dispatcher $dispatcher) {
+		$capsule = new Capsule;
+		$config = Yaf_Registry::get('config')->get('database');
+		$capsule->addConnection($config->toArray());
+
+		// Make this Capsule instance available globally via static methods... (optional)
+		$capsule->setAsGlobal();
 	}
 }
