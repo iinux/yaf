@@ -5,6 +5,7 @@
  * @desc 默认控制器
  * @see http://www.php.net/manual/en/class.yaf-controller-abstract.php
  */
+
 class IndexController extends BaseController {
 
 	/** 
@@ -26,7 +27,7 @@ class IndexController extends BaseController {
 		//4. render by Yaf, 如果这里返回FALSE, Yaf将不会调用自动视图引擎Render模板
         return TRUE;
 	}
-	public function indexAction()
+	public function index3Action()
 	{
 		$transport = Swift_SmtpTransport::newInstance('mail.139.com', 25);
 		$transport->setUsername('iinux@139.com');
@@ -45,12 +46,20 @@ class IndexController extends BaseController {
 		$message->setSubject("order");
 		$message->setBody('content', 'text/html', 'utf-8');
 		//$message->attach(Swift_Attachment::fromPath('pic.jpg', 'image/jpeg')->setFilename('rename_pic.jpg'));
-		try{
+		try {
 			$mailer->send($message);
-		}
-		catch (Exception $e){
+		} catch (Exception $e) {
 			echo 'error: There was a problem communicating with SMTP: ' . $e->getMessage();
 		}
+	}
+	public function index4Action()
+	{
+		// add records to the log
+		$this->log->warning('Foo');
+		$this->log->error('Bar');
+	}
+	public function indexAction()
+	{
 		//$this->view->assign("content", "Hello Hadoop! Welcome to Beijing!<br/>");
 		$this->view->clearVars();
 		$this->view->content = "Hello Hadoop! Welcome to Beijing!<br/>";
