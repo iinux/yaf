@@ -1,0 +1,9 @@
+{
+	"description" : "The Yaf framework",
+	"name" : "yaf/framework",
+	"license": "MIT",
+	"require": {
+		"php": ">=5.4.0",
+		"swiftmailer/swiftmailer": "*"
+	}
+}

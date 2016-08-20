@@ -28,6 +28,29 @@ class IndexController extends BaseController {
 	}
 	public function indexAction()
 	{
+		$transport = Swift_SmtpTransport::newInstance('mail.139.com', 25);
+		$transport->setUsername('iinux@139.com');
+		$transport->setPassword('leuwai');
+
+		if (false) {
+			$transport->setEncryption('ssl');
+		}
+
+		$mailer = Swift_Mailer::newInstance($transport);
+
+		$message = Swift_Message::newInstance();
+		$message->setFrom(array('iinux@139.com' => 'iinux'));
+		$emailTo = ['iinux@139.com' => 'iinux'];
+		$message->setTo($emailTo);
+		$message->setSubject("order");
+		$message->setBody('content', 'text/html', 'utf-8');
+		//$message->attach(Swift_Attachment::fromPath('pic.jpg', 'image/jpeg')->setFilename('rename_pic.jpg'));
+		try{
+			$mailer->send($message);
+		}
+		catch (Exception $e){
+			echo 'error: There was a problem communicating with SMTP: ' . $e->getMessage();
+		}
 		//$this->view->assign("content", "Hello Hadoop! Welcome to Beijing!<br/>");
 		$this->view->clearVars();
 		$this->view->content = "Hello Hadoop! Welcome to Beijing!<br/>";

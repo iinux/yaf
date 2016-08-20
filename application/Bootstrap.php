@@ -31,7 +31,12 @@ class Bootstrap extends Yaf_Bootstrap_Abstract{
 
 	public function _initSmarty(Yaf_Dispatcher $dispatcher){
 		//init smarty view engine
+		//php.ini need add yaf.use_spl_auload = On
 		$smarty = new Smarty_Adapter(null, Yaf_Registry::get('config')->get('smarty'));
 		$dispatcher->setView($smarty);
+	}
+
+	public function _initLoader(Yaf_Dispatcher $dispatcher) {
+		require __DIR__.'/../vendor/autoload.php';
 	}
 }
